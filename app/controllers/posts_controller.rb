@@ -1,7 +1,13 @@
 class PostsController < ApplicationController
 
   def index
-    @posts = Post.all
+    # checks if there exists an author_id in params
+    # or if user has navigated to /authors/:id/posts or /posts
+    if params[:author_id] # author_id comes from Rails, it appends _id to parent resource name
+      @posts = Author.find(params[:author_id]).posts # returns posts by said author_id
+    else
+      @posts = Post.all
+    end
   end
 
   def show
